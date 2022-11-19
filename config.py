@@ -1,6 +1,9 @@
 TOKEN = "5665739826:AAEhRH8dJFhnNa3QI9SqfeMe07kItxSrogI"
 keys = {
-    'евро': 'EUR',
     'доллар': 'USD',
-    'рубль': 'RUB',
+    'евро': 'EUR',
+    'рубль': 'RUB'
 }
+headers = {
+            "apikey": "vnJOVuUItlmNpP3Gi2ZFWQNUgk5Ma1p4"
+        }

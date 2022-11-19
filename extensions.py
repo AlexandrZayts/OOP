@@ -1,6 +1,6 @@
 import requests
 import json
-from config import keys
+from config import keys, headers
 
 
 class ConvertionException(Exception):
@@ -9,7 +9,7 @@ class ConvertionException(Exception):
 
 class ValuesConverter:
     @staticmethod
-    def get_price(quote: str, base: str, amount: str):
+    def get_price(quote, base, amount):
         if quote == base:
             raise ConvertionException(f'Невозможно перевести одинаковые валюты {base}.')
 
@@ -28,7 +28,10 @@ class ValuesConverter:
         except ValueError:
             raise ConvertionException(f'Не удалось обработать количество {amount}')
 
-        r = requests.get(f'https://api.tinkoff.ru/v1/currency_rates?from={quote_ticker}&to={base_ticker}')
-        total_base = json.loads(r.content)[keys[base]]
+        url = f"https://api.apilayer.com/exchangerates_data/convert?to={base_ticker}&from={quote_ticker}&amount={amount}"
+        r = requests.request("GET", url, headers=headers,)
+        resp = json.loads(r.content)
+        result = resp['result']
+        answer = f"Цена {amount} {base} в {quote} - {result}"
 
-        return total_base
+        return answer
